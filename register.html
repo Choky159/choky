@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .register-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .nav-menu {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: #2575fc;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      color: #1e5dd9;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .form-group input:focus {
+      border-color: #2575fc;
+      outline: none;
+    }
+
+    .register-btn {
+      width: 100%;
+      padding: 12px;
+      background: #2575fc;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .register-btn:hover {
+      background: #1e5dd9;
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .footer-text a {
+      color: #2575fc;
+      text-decoration: none;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <div class="nav-menu">
+      <a href="index.html">Login</a>
+      <a href="register.html">Buat User</a>
+    </div>
+    <h2>Buat Akun</h2>
+    <form>
+      <div class="form-group">
+        <label for="fullname">Nama Lengkap</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Masukkan nama lengkap" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Masukkan email" required />
+      </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Buat username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Buat password" required />
+      </div>
+      <button type="submit" class="register-btn">Daftar</button>
+    </form>
+    <div class="footer-text">
+      Sudah punya akun? <a href="index.html">Login di sini</a>
+    </div>
+  </div>
+</body>
+</html>
