@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Opname</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .hidden { display: none; }
+    .container { max-width: 1000px; margin: auto; }
+    label, input, button, select { display: block; margin-top: 10px; width: 100%; padding: 8px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    .button-group { display: flex; gap: 10px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="login-section">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="stock-section" class="hidden">
+    <h2>Stock Opname</h2>
+
+    <label for="conveyor-select">Select Conveyor:</label>
+    <select id="conveyor-select" onchange="filterStock()"></select>
+
+    <label for="pipa-select">Select No Pipa:</label>
+    <select id="pipa-select" onchange="filterStock()"></select>
+
+    <table id="stock-table">
+      <thead>
+        <tr>
+          <th>Conveyor</th>
+          <th>Pipa</th>
+          <th>Code</th>
+          <th>Ducting</th>
+          <th>Qty Aktual</th>
+        </tr>
+      </thead>
+      <tbody id="stock-body"></tbody>
+    </table>
+
+    <div class="button-group">
+      <button onclick="saveData()">Save</button>
+      <button onclick="resetInputs()">Reset</button>
+      <button onclick="exportToCSV()">Export to CSV</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const stockMaster = [
+    { id: 1, conveyor: 'AIR BAG', pipa: 'A1-01', code: 'A1', ducting: 'S-200 ( D )' },
+    { id: 2, conveyor: 'AIR BAG', pipa: 'A1-01', code: 'A1', ducting: 'S-202 ( A )' },
+    { id: 3, conveyor: 'AIR BAG', pipa: 'A1-01', code: 'A1', ducting: 'S-202 ( F )' },
+    { id: 4, conveyor: 'AIR BAG', pipa: 'A1-02', code: 'A1', ducting: 'S-200 ( A )' },
+    { id: 5, conveyor: 'AIR BAG', pipa: 'A1-02', code: 'A1', ducting: 'S-200 ( F )' }
+  ];
+
+  let currentFiltered = [];
+
+  function login() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+    if (user === 'admin' && pass === 'admin') {
+      document.getElementById('login-section').classList.add('hidden');
+      document.getElementById('stock-section').classList.remove('hidden');
+      populateDropdowns();
+    } else {
+      alert('Invalid credentials');
+    }
+  }
+
+  function populateDropdowns() {
+    const conveyorSelect = document.getElementById('conveyor-select');
+    const pipaSelect = document.getElementById('pipa-select');
+
+    const conveyors = [...new Set(stockMaster.map(item => item.conveyor))];
+    conveyorSelect.innerHTML = '<option value="">-- Select Conveyor --</option>' + conveyors.map(c => `<option value="${c}">${c}</option>`).join('');
+
+    const pipas = [...new Set(stockMaster.map(item => item.pipa))];
+    pipaSelect.innerHTML = '<option value="">-- Select No Pipa --</option>' + pipas.map(p => `<option value="${p}">${p}</option>`).join('');
+  }
+
+  function filterStock() {
+    const conveyorVal = document.getElementById('conveyor-select').value;
+    const pipaVal = document.getElementById('pipa-select').value;
+
+    currentFiltered = stockMaster.filter(item => {
+      return (!conveyorVal || item.conveyor === conveyorVal) &&
+             (!pipaVal || item.pipa === pipaVal);
+    });
+
+    renderStock(currentFiltered);
+  }
+
+  function renderStock(data) {
+    const tbody = document.getElementById('stock-body');
+    tbody.innerHTML = '';
+    data.forEach(item => {
+      const row = `<tr>
+        <td>${item.conveyor}</td>
+        <td>${item.pipa}</td>
+        <td>${item.code}</td>
+        <td>${item.ducting}</td>
+        <td><input type="number" id="actual-${item.id}" placeholder="Qty Aktual"></td>
+      </tr>`;
+      tbody.innerHTML += row;
+    });
+  }
+
+  function saveData() {
+    const actuals = currentFiltered.map(item => {
+      const actualQty = document.getElementById(`actual-${item.id}`)?.value;
+      return { ...item, actual: actualQty };
+    }).filter(item => item.actual !== undefined);
+
+    console.log('Saved data:', actuals);
+    alert('Stock data saved successfully! Check console for details.');
+  }
+
+  function resetInputs() {
+    currentFiltered.forEach(item => {
+      const input = document.getElementById(`actual-${item.id}`);
+      if (input) input.value = '';
+    });
+  }
+
+  function exportToCSV() {
+    let csvContent = "data:text/csv;charset=utf-8,Conveyor,Pipa,Code,Ducting,Qty Aktual
+";
+    currentFiltered.forEach(item => {
+      const qty = document.getElementById(`actual-${item.id}`)?.value || '';
+      const row = [item.conveyor, item.pipa, item.code, item.ducting, qty].join(",");
+      csvContent += row + "
+";
+    });
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "stock_opname.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+</script>
+</body>
+</html>
