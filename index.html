@@ -1,212 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stock Opname</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Page</title>
   <style>
-    :root {
-      --primary: #0077cc;
-      --secondary: #f9f9f9;
-      --border: #ddd;
-      --radius: 10px;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #f0f4f8;
-      color: #333;
-    }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      background-color: #fff;
-      padding: 30px;
-      border-radius: var(--radius);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-    h2 {
-      color: var(--primary);
-      margin-bottom: 20px;
-    }
-    label {
-      margin-top: 20px;
-      display: block;
-      font-weight: 600;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      margin-bottom: 10px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+    * {
       box-sizing: border-box;
     }
-    button {
-      background-color: var(--primary);
-      color: #fff;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      background-color: #005fa3;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid var(--border);
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: var(--secondary);
-    }
-    .hidden {
-      display: none;
-    }
-    .button-group {
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
       display: flex;
-      gap: 10px;
-      margin-top: 20px;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .nav-menu {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: #2575fc;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      color: #1e5dd9;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .form-group input:focus {
+      border-color: #2575fc;
+      outline: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: #2575fc;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: #1e5dd9;
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .footer-text a {
+      color: #2575fc;
+      text-decoration: none;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <div id="login-section">
+  <div class="login-container">
+    <div class="nav-menu">
+      <a href="#">Login</a>
+      <a href="#">Buat User</a>
+    </div>
     <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-  </div>
-
-  <div id="stock-section" class="hidden">
-    <h2>Stock Opname</h2>
-
-    <label for="conveyor-select">Select Conveyor:</label>
-    <select id="conveyor-select" onchange="filterStock()"></select>
-
-    <label for="pipa-select">Select No Pipa:</label>
-    <select id="pipa-select" onchange="filterStock()"></select>
-
-    <table id="stock-table">
-      <thead>
-        <tr>
-          <th>Conveyor</th>
-          <th>Pipa</th>
-          <th>Code</th>
-          <th>Ducting</th>
-          <th>Qty Aktual</th>
-        </tr>
-      </thead>
-      <tbody id="stock-body"></tbody>
-    </table>
-
-    <div class="button-group">
-      <button onclick="saveData()">Save</button>
-      <button onclick="resetInputs()">Reset</button>
-      <button onclick="exportToCSV()">Export to CSV</button>
+    <form>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required />
+      </div>
+      <button type="submit" class="login-btn">Log In</button>
+    </form>
+    <div class="footer-text">
+      Belum punya akun? <a href="#">Daftar di sini</a>
     </div>
   </div>
-</div>
-
-<script>
-  const stockMaster = [
-    { id: 1, conveyor: 'AIR BAG', pipa: 'A1-01', code: 'A1', ducting: 'S-200 ( D )' },
-    { id: 2, conveyor: 'AIR BAG', pipa: 'A1-01', code: 'A1', ducting: 'S-202 ( A )' },
-    { id: 3, conveyor: 'AIR BAG', pipa: 'A1-01', code: 'A1', ducting: 'S-202 ( F )' },
-    { id: 4, conveyor: 'AIR BAG', pipa: 'A1-02', code: 'A1', ducting: 'S-200 ( A )' },
-    { id: 5, conveyor: 'AIR BAG', pipa: 'A1-02', code: 'A1', ducting: 'S-200 ( F )' }
-  ];
-
-  let currentFiltered = [];
-
-  function login() {
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
-    if (user === 'admin' && pass === 'admin') {
-      document.getElementById('login-section').classList.add('hidden');
-      document.getElementById('stock-section').classList.remove('hidden');
-      populateDropdowns();
-    } else {
-      alert('Invalid credentials');
-    }
-  }
-
-  function populateDropdowns() {
-    const conveyorSelect = document.getElementById('conveyor-select');
-    const pipaSelect = document.getElementById('pipa-select');
-
-    const conveyors = [...new Set(stockMaster.map(item => item.conveyor))];
-    conveyorSelect.innerHTML = '<option value="">-- Select Conveyor --</option>' + conveyors.map(c => `<option value="${c}">${c}</option>`).join('');
-
-    const pipas = [...new Set(stockMaster.map(item => item.pipa))];
-    pipaSelect.innerHTML = '<option value="">-- Select No Pipa --</option>' + pipas.map(p => `<option value="${p}">${p}</option>`).join('');
-  }
-
-  function filterStock() {
-    const conveyorVal = document.getElementById('conveyor-select').value;
-    const pipaVal = document.getElementById('pipa-select').value;
-
-    currentFiltered = stockMaster.filter(item => {
-      return (!conveyorVal || item.conveyor === conveyorVal) &&
-             (!pipaVal || item.pipa === pipaVal);
-    });
-
-    renderStock(currentFiltered);
-  }
-
-  function renderStock(data) {
-    const tbody = document.getElementById('stock-body');
-    tbody.innerHTML = '';
-    data.forEach(item => {
-      const row = `<tr>
-        <td>${item.conveyor}</td>
-        <td>${item.pipa}</td>
-        <td>${item.code}</td>
-        <td>${item.ducting}</td>
-        <td><input type="number" id="actual-${item.id}" placeholder="Qty Aktual"></td>
-      </tr>`;
-      tbody.innerHTML += row;
-    });
-  }
-
-  function saveData() {
-    const actuals = currentFiltered.map(item => {
-      const actualQty = document.getElementById(`actual-${item.id}`)?.value;
-      return { ...item, actual: actualQty };
-    }).filter(item => item.actual !== undefined);
-
-    console.log('Saved data:', actuals);
-    alert('Stock data saved successfully! Check console for details.');
-  }
-
-  function resetInputs() {
-    currentFiltered.forEach(item => {
-      const input = document.getElementById(`actual-${item.id}`);
-      if (input) input.value = '';
-    });
-  }
-
-  function exportToCSV() {
-    let csvContent = "data:text/csv;charset=utf-8,Conveyor,Pipa,Code,Ducting,Qty Aktual\n";
-    currentFiltered.forEach(item => {
-      const qty = document.getElementById(`actual-${item.id}`)?.value || '';
-      const row = [item.conveyor, item.pipa, item.code, item.ducting, qty].join(",");
-      csvContent += row + "\n";
-    });
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "stock_opname.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-</script>
 </body>
 </html>
+
